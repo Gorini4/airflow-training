@@ -20,6 +20,7 @@ dag = DAG(
 
 dds_payment_hub = PostgresOperator(
     task_id="dds_payment_hub",
+    dag=dag,
     # postgres_conn_id="postgres_default",
     sql="""
         insert into dds.payment_hub
