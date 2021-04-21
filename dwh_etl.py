@@ -55,7 +55,9 @@ fill_ods_hashed = PostgresOperator(
     """
 )
 
-clear_ods >> fill_ods >> clear_ods_hashed >> fill_ods_hashed
+ods_loaded = DummyOperator(task_id="ods_loaded", dag=dag)
+
+clear_ods >> fill_ods >> clear_ods_hashed >> fill_ods_hashed >> ods_loaded
 
 dds_hub_user = PostgresOperator(
     task_id="dds_hub_user",
@@ -66,6 +68,8 @@ dds_hub_user = PostgresOperator(
         FROM "rtk_de"."egorios"."view_hub_user_etl"
     """
 )
+
+ods_loaded >> dds_hub_user
 
 all_hubs_loaded = DummyOperator(task_id="all_hubs_loaded", dag=dag)
 
