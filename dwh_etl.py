@@ -42,7 +42,7 @@ clear_ods_hashed = PostgresOperator(
     task_id="clear_ods_hashed",
     dag=dag,
     sql="""
-        DELETE FROM egorios.ods_payment WHERE EXTRACT(YEAR FROM pay_date::DATE) = {{ execution_date.year }}
+        DELETE FROM egorios.ods_payment_hashed WHERE EXTRACT(YEAR FROM pay_date::DATE) = {{ execution_date.year }}
     """
 )
 
